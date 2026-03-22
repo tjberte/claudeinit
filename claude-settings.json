@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p $(pwd)/.claude_logs && echo -e \"## $(date '+%Y-%m-%d %H:%M:%S')\\n**Prompt:** $CLAUDE_USER_PROMPT\\n\" >> $(pwd)/.claude_logs/${CLAUDE_SESSION_ID}.md"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo -e \"**Tool:** $CLAUDE_TOOL_NAME\\n**Input:** $(echo $CLAUDE_TOOL_INPUT | head -c 300)\\n---\\n\" >> $(pwd)/.claude_logs/${CLAUDE_SESSION_ID}.md"
+          }
+        ]
+      }
+    ]
+  }
+}
